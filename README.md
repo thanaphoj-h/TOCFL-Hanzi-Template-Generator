@@ -2,6 +2,10 @@
 
 ## About
 
+### Author
+
+Thanaphoj Horthaisong <<thanaphoj.horthaisong@gmail.com>>
+
 ### Fonts
 
 This project uses publicly available fonts from official sources:
