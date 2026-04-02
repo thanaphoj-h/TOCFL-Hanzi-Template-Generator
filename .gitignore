@@ -1,1 +1,16 @@
+# Virtual Environment
 .venv
+venv
+
+# Documents
+*.pdf
+
+# Python Cache
+__pycache__
+
+# Log Config / Log File
+logs
+*.log
+
+# Old file
+_old
