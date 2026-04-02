@@ -25,4 +25,3 @@ class Config:
             value = value[k]
 
         return value
-            

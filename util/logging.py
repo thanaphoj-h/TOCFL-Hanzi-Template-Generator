@@ -1,15 +1,18 @@
 import os
 import logging
+from datetime import datetime, timezone, timedelta
 from logging.handlers import TimedRotatingFileHandler
+
+TZ = timezone(timedelta(hours=7))
 
 def setup_logging(config):
     log_level_config = config.get("logging.level", "INFO").upper()
     log_level = getattr(logging, log_level_config, logging.INFO)
 
-    log_format = "%(asctime)s.%(msecs)03d | %(levelname)-5s | [%(name)s:%(lineno)d] | %(message)s"
-    date_format = "%Y-%m-%dT%H:%M:%S"
+    log_format = "%(asctime)s | %(levelname)s | [%(name)s:%(lineno)d] | %(message)s"
 
-    formatter = logging.Formatter(log_format, datefmt=date_format)
+    formatter = logging.Formatter(log_format)
+    formatter.formatTime = custom_format_time.__get__(formatter, logging.Formatter)
 
     # <----- Root Logger ----->
     logger = logging.getLogger()
@@ -24,7 +27,7 @@ def setup_logging(config):
     log_file = config.get("logging.file", "logs/app.log")
     log_dir = os.path.dirname(log_file)
     if log_dir:
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        os.makedirs(log_dir, exist_ok=True)
     
     file_handler = TimedRotatingFileHandler(
         filename=log_file,
@@ -42,3 +45,7 @@ def setup_logging(config):
 
 def get_logger(name: str):
     return logging.getLogger(name)
+
+def custom_format_time(self, record, datefmt=None):
+    dt = datetime.fromtimestamp(record.created, tz=TZ)
+    return dt.isoformat(timespec="milliseconds")

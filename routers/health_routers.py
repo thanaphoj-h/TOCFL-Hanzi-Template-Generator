@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from core.logging import get_logger
+from util.logging import get_logger
 
 router = APIRouter(prefix="/health", tags=["health"])
 log = get_logger(__name__)
