@@ -1,3 +1,9 @@
+middleware:
+  excluded_paths:
+    - /docs
+    - /openapi.json
+    - /redoc  
+
 logging:
   level: INFO
   file: logs/app.log
